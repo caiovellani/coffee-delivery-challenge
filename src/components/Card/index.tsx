@@ -1,3 +1,8 @@
+import { CheckFat, ShoppingCart } from "@phosphor-icons/react"
+import { useEffect, useState } from "react"
+import { useTheme } from "styled-components"
+import { useCart } from "../../hooks/useCart"
+import { QuantityInput } from "../Form/QuantityInput"
 import {
   CoffeeImage,
   Container,
@@ -21,12 +26,52 @@ type Props = {
 }
 
 export function Card({ coffee }: Props) {
+  const [quantity, setQuantity] = useState(1)
+  const [isItemAdded, setIsItemAdded] = useState(false)
+  const theme = useTheme()
+  const { addItem } = useCart()
+
+  function incrementQuantity() {
+    setQuantity((state) => state + 1)
+  }
+
+  function decrementQuantity() {
+    if (quantity > 1) {
+      setQuantity((state) => state - 1)
+    }
+  }
+
+  function handleAddItem() {
+    addItem({ id: coffee.id, quantity })
+    setIsItemAdded(true)
+    setQuantity(1)
+  }
+
+  useEffect(() => {
+    let timeout: number
+
+    if (isItemAdded) {
+      timeout = setTimeout(() => {
+        setIsItemAdded(false)
+      }, 1000)
+    }
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
+  }, [isItemAdded])
+
+  
    return(
     <Container>
       <CoffeeImage src={coffee.image} alt = {coffee.title} />
 
       <Tags>
-        <span>tag</span>
+        {coffee.tags.map((tag) => (
+          <span key={tag}>{tag}</span>
+        ))}
       </Tags>
        
       <Title>{coffee.title}</Title>
@@ -39,9 +84,22 @@ export function Card({ coffee }: Props) {
           <span>{coffee.price.toFixed(2)}</span>
         </Price>
 
-        <Order></Order>
-      </Control>
+        <Order $itemAdded={isItemAdded}>
+          <QuantityInput 
+            quantity={quantity}
+            incrementQuantity={incrementQuantity}
+            decrementQuantity={decrementQuantity}
+          />
 
+          <button disabled={isItemAdded} onClick={handleAddItem}>
+            {isItemAdded ? (
+              <CheckFat size={22} weight="fill" color={theme.colors['base-card']} />
+            ) : (
+              <ShoppingCart size={22} color={theme.colors["base-card"]} />
+            )}
+          </button>
+        </Order>
+      </Control>
     </Container>
   )
 }

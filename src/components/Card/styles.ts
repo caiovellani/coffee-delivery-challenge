@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
-import { mixins } from "../../styles/mixins";
+import { mixins } from '../../styles/mixins'
 
 export const Container = styled.div`
-  background-color: ${(props) => props.theme.colors['base-card']};
+  background-color: ${({ theme }) => theme.colors['base-card']};
   padding: 0 20px 20px;
   border-radius: 6px 36px;
   width: 256px;
@@ -27,13 +27,13 @@ export const Tags = styled.div`
   display: flex;
   align-items: center;
   align-self: center;
-  gap: 4px
+  gap: 4px;
 
   span {
     padding: 4px 8px;
     border-radius: 100px;
-    background-color: ${(props) => props.theme.colors['yellow-light']};
-    color: ${(props) => props.theme.colors['yellow-dark']};
+    background-color: ${({ theme }) => theme.colors['yellow-light']};
+    color: ${({ theme }) => theme.colors['yellow-dark']};
     text-transform: uppercase;
     ${mixins.fonts.tag}
   }
@@ -42,7 +42,7 @@ export const Tags = styled.div`
 export const Title = styled.h3`
   margin-top: 16px;
 
-  color: ${(props) => props.theme.colors['base-subtitle']};
+  color: ${({ theme }) => theme.colors['base-subtitle']};
   ${mixins.fonts.titleS}
 `
 
@@ -50,9 +50,10 @@ export const Description = styled.span`
   margin-top: 8px;
   width: 100%;
 
-  color: ${(props) => props.theme.colors['base-label']};
+  color: ${({ theme }) => theme.colors['base-label']};
   ${mixins.fonts.textS}
 `
+
 export const Control = styled.div`
   display: flex;
   align-items: center;
@@ -68,18 +69,31 @@ export const Price = styled.div`
 
   span:first-child {
     ${mixins.fonts.textS};
-    color: ${(props) => props.theme.colors['base-text']};
+    color: ${({ theme }) => theme.colors['base-text']};
   }
 
   span:last-child {
     ${mixins.fonts.titleM};
-    color: ${(props) => props.theme.colors['base-text']};
+    color: ${({ theme }) => theme.colors['base-text']};
   }
 `
 
-export const Order = styled.div`
+export const Order = styled.div<{ $itemAdded?: boolean }>`
   display: flex;
   align-items: center;
   gap: 8px;
 
+  > button {
+    background-color: ${({ theme, $itemAdded }) =>
+      $itemAdded ? theme.colors['yellow-dark'] : theme.colors['purple-dark']};
+    transition: background-color 0.2s;
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+
+    &:hover {
+      background-color: ${({ theme, $itemAdded }) =>
+        $itemAdded ? theme.colors.yellow : theme.colors.purple};
+    }
+  }
 `
