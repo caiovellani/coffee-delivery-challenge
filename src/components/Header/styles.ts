@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { mixins } from "../../styles/mixins";
+import styled from 'styled-components'
 
+import { mixins } from '../../styles/mixins'
 
 export const Container = styled.header`
   max-width: 1160px;
@@ -21,14 +21,14 @@ export const Aside = styled.aside`
     align-items: center;
     gap: 4px;
 
-    background-color: ${(props) => props.theme.colors['purple-light']};
+    background-color: ${({ theme }) => theme.colors['purple-light']};
 
     svg {
-      color: ${(props) => props.theme.colors.purple};
+      color: ${({ theme }) => theme.colors.purple};
     }
 
     span {
-      color: ${(props) => props.theme.colors['purple-dark']};
+      color: ${({ theme }) => theme.colors['purple-dark']};
     }
 
     padding: 10px 8px;
@@ -39,8 +39,8 @@ export const Aside = styled.aside`
     display: flex;
     align-items: center;
 
-    background-color: ${(props) => props.theme.colors['yellow-light']};
-    color: ${(props) => props.theme.colors['yellow-dark']};
+    background-color: ${({ theme }) => theme.colors['yellow-light']};
+    color: ${({ theme }) => theme.colors['yellow-dark']};
 
     padding: 8px;
     border-radius: 6px;
@@ -54,8 +54,8 @@ export const Aside = styled.aside`
     span {
       ${mixins.fonts.textS};
       font-weight: bold;
-      color: ${(props) => props.theme.colors.white};
-      background-color: ${(props) => props.theme.colors['yellow-dark']};
+      color: ${({ theme }) => theme.colors.white};
+      background-color: ${({ theme }) => theme.colors['yellow-dark']};
       border-radius: 50%;
       width: 20px;
       height: 20px;
